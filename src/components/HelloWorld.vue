@@ -1,21 +1,37 @@
 <script setup>
     import { ref } from 'vue'
+	import { NotebookTabs, Minus, Coffee, CakeSlice, Croissant  } from 'lucide-vue-next'
 
-    const msg = ref('Hello World!')
+    const header = ref('Bakery Shopping App')
+
+	const items = ref([
+		{name: "Coffee", icon: Coffee},
+		{name: "Cake portion", icon: CakeSlice},
+		{name: "Croissant", icon: Croissant},
+
+	])
 </script>
 
 <template>
     <div class="min-h-screen flex justify-center items-center bg-vue/30">
 		<div class="flex flex-col bg-white rounded-2xl max-w-5xl px-18 py-12 shadow-2xl">
-			<h1 class="text-2xl text-vue">{{ msg.toLocaleUpperCase() }}</h1>
-			<h3 class="text-sm text-slate-400">
-				You’ve successfully created a project with
-				<a href="https://vite.dev/" target="_blank" rel="noopener" class="text-slate-600">Vite</a> +
-				<a href="https://vuejs.org/?uwu=true" target="_blank" rel="noopener" class="text-vue">Vue 3</a>.
-			</h3>
-			<div class="mt-5">
-				<input type="text" v-model="msg" class="border-2 px-2.5 py-1.5 shadow-2xl rounded-2xl">
+			<div class="flex items-end justify-center gap-2.5">
+				<NotebookTabs class="size-8 text-vue" />
+				<h1 class="text-2xl text-slate-500">{{ header }}</h1>
 			</div>
+			<ul class="mt-5">
+				<li
+					v-for="({name, icon}) in items"
+					:key="name"
+					class="flex items-center gap-2"
+				>
+					<span>
+						<Minus class="size-5 text-slate-400" />
+					</span>
+					<span class="text-slate-400">{{ name }}</span>
+					<component :is="icon" class="size-5 text-vue/70" />
+				</li>
+			</ul>
 		</div>
   </div>
 </template>
