@@ -1,6 +1,6 @@
 <script setup>
     import { ref } from 'vue'
-	import { NotebookTabs, Minus, Coffee, CakeSlice, Croissant  } from 'lucide-vue-next'
+	import { NotebookTabs, Minus, Coffee, CakeSlice, Croissant, SmilePlus  } from 'lucide-vue-next'
 
     const header = ref('Bakery Shopping App')
 
@@ -8,17 +8,52 @@
 		{name: "Coffee", icon: Coffee},
 		{name: "Cake portion", icon: CakeSlice},
 		{name: "Croissant", icon: Croissant},
-
 	])
+
+    const newItem = ref("")
+    const newItemHighPriority = ref(false)
 </script>
 
 <template>
     <div class="min-h-screen flex justify-center items-center bg-vue/30">
-		<div class="flex flex-col bg-white rounded-2xl max-w-5xl px-18 py-12 shadow-2xl">
-			<div class="flex items-end justify-center gap-2.5">
+		<div class="flex flex-col bg-white border-2 border-slate-600 rounded-2xl max-w-5xl px-18 py-12 shadow-2xl">
+			<div class="flex items-end justify-center gap-2.5 mb-6">
 				<NotebookTabs class="size-8 text-vue" />
 				<h1 class="text-2xl text-slate-500">{{ header }}</h1>
 			</div>
+            <form
+                @submit.prevent="items.push({
+                    id: items.length + 1,
+                    name: newItem,
+                    icon: SmilePlus
+                }),
+                newItem = '',
+                newItemHighPriority = false
+                "
+            >
+                <input
+                    v-model.trim="newItem"
+                    type="text"
+                    class="border border-slate-400 mt-4 p-2.5 rounded-2xl text-xs"
+                    placeholder="Add an product..."
+                />
+                <div class="my-4 flex justify-between items-center">
+                    <div class="flex gap-2">
+                        <input
+                            v-model="newItemHighPriority"
+                            type="checkbox"
+                            class="w-4 h-4 rounded border accent-vue focus:outline-none"
+                            @click="$event.target.blur()"
+                        />
+                        <span class="text-sm font-bold">High Priority</span>
+                    </div>
+                    <button
+                        class="btn-sm bg-vue px-3 py-1.5 rounded text-white"
+                    >
+                        Save Item
+                    </button>
+                </div>
+            </form>
 			<ul class="mt-5">
 				<li
 					v-for="({name, icon}) in items"

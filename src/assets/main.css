@@ -22,4 +22,16 @@
         font-style: normal;
         font-display: swap;
     }
+
+    input[type="checkbox"] {
+        @apply appearance-none w-4 h-4 border-2 border-slate-400 rounded cursor-pointer;
+        @apply checked:bg-vue checked:border-vue;
+        @apply focus:outline-none focus:ring-2 focus:ring-vue/50;
+    }
+
+    input[type="checkbox"]:checked::before {
+        content: "✓";
+        @apply flex items-center justify-center text-white text-xs font-bold;
+    }
+
 }
