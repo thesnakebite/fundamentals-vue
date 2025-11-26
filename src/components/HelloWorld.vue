@@ -12,6 +12,20 @@
 
     const newItem = ref("")
     const newItemHighPriority = ref(false)
+
+    const saveItem = () => {
+        if (newItem.value.trim()) {
+            items.value.push({
+                id: items.value.length + 1,
+                name: newItem.value,
+                icon: SmilePlus,
+                highPriority: newItemHighPriority.value
+            })
+            // Reset
+            newItem.value = ''
+            newItemHighPriority.value = false
+        }
+    }
 </script>
 
 <template>
@@ -21,16 +35,7 @@
 				<NotebookTabs class="size-8 text-vue" />
 				<h1 class="text-2xl text-slate-500">{{ header }}</h1>
 			</div>
-            <form
-                @submit.prevent="items.push({
-                    id: items.length + 1,
-                    name: newItem,
-                    icon: SmilePlus
-                }),
-                newItem = '',
-                newItemHighPriority = false
-                "
-            >
+            <form @submit.prevent="saveItem">
                 <input
                     v-model.trim="newItem"
                     type="text"
