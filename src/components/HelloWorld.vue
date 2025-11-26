@@ -5,9 +5,9 @@
     const header = ref('Bakery Shopping App')
 
 	const items = ref([
-		{name: "Coffee", icon: Coffee},
-		{name: "Cake portion", icon: CakeSlice},
-		{name: "Croissant", icon: Croissant},
+	//	  {name: "Coffee", icon: Coffee},
+	//	  {name: "Cake portion", icon: CakeSlice},
+	//	  {name: "Croissant", icon: Croissant},
 	])
 
     const newItem = ref("")
@@ -59,7 +59,13 @@
                     </button>
                 </div>
             </form>
-			<ul class="mt-5">
+
+            <div v-if="!items.length" class="text-shadow-vue text-vue text-center">
+                <span>...</span>
+                <p>Nothing to see here</p>
+            </div>
+
+            <ul v-else class="mt-5">
 				<li
 					v-for="({name, icon}) in items"
 					:key="name"
