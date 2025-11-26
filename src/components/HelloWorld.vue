@@ -3,6 +3,7 @@
 	import { NotebookTabs, Minus, Coffee, CakeSlice, Croissant, SmilePlus  } from 'lucide-vue-next'
 
     const header = ref('Bakery Shopping App')
+    const editing = ref(false)
 
 	const items = ref([
 	//	  {name: "Coffee", icon: Coffee},
@@ -26,20 +27,43 @@
             newItemHighPriority.value = false
         }
     }
+
+    const doEdit = (e) => {
+        editing.value = e
+        newItem.value = ""
+    }
 </script>
 
 <template>
     <div class="min-h-screen flex justify-center items-center bg-vue/30">
-		<div class="flex flex-col bg-white border-2 border-slate-600 rounded-2xl max-w-5xl px-18 py-12 shadow-2xl">
-			<div class="flex items-end justify-center gap-2.5 mb-6">
-				<NotebookTabs class="size-8 text-vue" />
-				<h1 class="text-2xl text-slate-500">{{ header }}</h1>
+		<div class="flex flex-col bg-white border-2 border-slate-600 rounded-2xl max-w-5xl px-10 py-12 shadow-2xl">
+			<div class="flex items-center gap-9">
+                <div class="flex">
+                    <NotebookTabs class="size-8 text-vue" />
+                    <h1 class="text-2xl text-slate-500">{{ header }}</h1>
+                </div>
+                <div class="flex flex-col gap-2 text-xs">
+                    <button
+                        v-if="editing"
+                        @click="doEdit(false)"
+                        class="border border-slate px-2.5 py-1.5 rounded hover:bg-slate-600 hover:text-white"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        v-else
+                        @click="doEdit(true)"
+                         class="px-2.5 py-1.5 rounded bg-sky-600 text-white hover:bg-sky-600/90"
+                    >
+                         Add Item
+                    </button>
+                </div>
 			</div>
-            <form @submit.prevent="saveItem">
+            <form v-if="editing" @submit.prevent="saveItem">
                 <input
                     v-model.trim="newItem"
                     type="text"
-                    class="border border-slate-400 mt-4 p-2.5 rounded-2xl text-xs"
+                    class="border border-slate-400 mt-4 p-2.5 rounded-2xl text-xs w-full"
                     placeholder="Add an product..."
                 />
                 <div class="my-4 flex justify-between items-center">
