@@ -77,7 +77,8 @@
                         <span class="text-sm font-bold">High Priority</span>
                     </div>
                     <button
-                        class="btn-sm bg-vue px-3 py-1.5 rounded text-white"
+                        :disabled="newItem.length < 5"
+                        class="btn-sm bg-vue px-3 py-1.5 rounded text-white disabled:opacity-75 disabled:cursor-not-allowed"
                     >
                         Save Item
                     </button>
