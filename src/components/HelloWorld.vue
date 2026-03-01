@@ -1,9 +1,11 @@
 <script setup>
-    import { ref } from 'vue'
+    import { ref, computed } from 'vue'
 	import { NotebookTabs, Minus, Coffee, CakeSlice, Croissant, SmilePlus  } from 'lucide-vue-next'
 
     const header = ref('Bakery Shopping App')
     const editing = ref(false)
+    const characterLimit = computed( () => newItem.value.length )
+    const isOverLimit = computed( () => characterLimit.value > 20 )
 
 	const items = ref([
 	//	  {name: "Coffee", icon: Coffee},
@@ -64,8 +66,20 @@
                     v-model.trim="newItem"
                     type="text"
                     class="border border-slate-400 mt-4 p-2.5 rounded-2xl text-xs w-full"
+                    :class="{ 'border-red-500 outline-red-500': isOverLimit }"
                     placeholder="Add an product..."
                 />
+
+                 <!-- Counter -->
+                <div v-if="editing" class="my-4 flex justify-end">
+                    <span
+                        class="text-xs text-slate-300"
+                        :class="isOverLimit ? 'text-red-500 font-medium' : 'text-slate-300'"
+                    >
+                        {{ characterLimit }} / 20
+                    </span>
+                </div>
+
                 <div class="my-4 flex justify-between items-center">
                     <div class="flex gap-2">
                         <input
